@@ -555,7 +555,7 @@ def draw_home_ui(screen, game, font_small, font_large):
     for level in range(1, MAXIMUM_SELECTABLE_LEVEL+1):
         x = WINDOW_WIDTH/2 - WINDOW_HEIGHT*SELECTABLE_LEVEL_GRID_WIDTH/20 + ((level-1)%SELECTABLE_LEVEL_GRID_WIDTH+0.1)*WINDOW_HEIGHT*0.1
         y = (level-1)//SELECTABLE_LEVEL_GRID_WIDTH*WINDOW_HEIGHT*0.1 + WINDOW_HEIGHT*0.4
-        pygame.draw.rect(screen, UI_COLORS[min(math.ceil(level/STAGE_LENGTH), 9)] if (level != game.initial_level) else COLORS[-2], (x, y, WINDOW_HEIGHT*0.08, WINDOW_HEIGHT*0.08))
+        pygame.draw.rect(screen, UI_COLORS[min(math.ceil(level/STAGE_LENGTH), 9)] if (level != game.initial_level) else COLORS[-2], (x, y, WINDOW_HEIGHT*0.08, WINDOW_HEIGHT*0.08)) # type: ignore
         level_text = font_small.render(f"{level:02d}", False, COLORS[-3] if (level != game.initial_level) else UI_COLORS[min(math.ceil(level/STAGE_LENGTH), 9)])
         level_text_rect = level_text.get_rect()
         level_text_rect.center = (x+WINDOW_HEIGHT*0.042, y+WINDOW_HEIGHT*0.045)
