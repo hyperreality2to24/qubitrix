@@ -5,10 +5,10 @@ import math
 from copy import deepcopy
 from pygame.locals import QUIT, KEYDOWN, KEYUP
 
-from fonts import get_large_font, get_small_font
-from sounds import Effects
-from controllers.abstract_controller import AbstractController, GameEvent # type: ignore
-from controllers.keyboard_controller import KeyboardController
+from Qubitrix.fonts import get_large_font, get_small_font
+from Qubitrix.sounds import Effects
+from Qubitrix.controllers.abstract_controller import AbstractController, GameEvent # type: ignore
+from Qubitrix.controllers.keyboard_controller import KeyboardController
 
 WINDOW_WIDTH, WINDOW_HEIGHT = 960, 720
 ASPECT_RATIO = WINDOW_WIDTH/WINDOW_HEIGHT
