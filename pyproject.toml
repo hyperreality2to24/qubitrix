@@ -10,7 +10,7 @@
 
 [project]
 name = "qubitrix"
-version = "0.1.8"
+version = "0.1.1"
 description = "3D falling block game"
 authors = [{ name="Frederick McEvoy", email="FreddieM2048@gmail.com" }]
 readme = "README.md"
@@ -28,6 +28,7 @@ test = [
 
 [project.scripts]
 Qubitrix = "Qubitrix.qubitrix:main"
+# Qubitrix = "Qubitrix.app:main"
 
 [build-system]
 requires = ["setuptools>=61.0"]
