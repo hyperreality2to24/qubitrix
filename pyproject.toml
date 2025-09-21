@@ -28,7 +28,7 @@ test = [
 
 [project.scripts]
 Qubitrix = "Qubitrix.qubitrix:main"
-# Qubitrix = "Qubitrix.app:main"
+qubitrix-mvc = "Qubitrix.app:main"
 
 [build-system]
 requires = ["setuptools>=61.0"]
