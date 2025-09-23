@@ -58,6 +58,8 @@ class GameModel:
         from Qubitrix.qubitrix import PIECES, Effects
         if not self.hold_piece_used:
             self.hold_piece_used = True
+            if self.current_piece is None:
+                return # Prevent error if hold is used before a piece is active
             current_piece_index = self.current_piece["id"] - 1
             self.current_piece, self.held_piece = self.held_piece, deepcopy(PIECES[current_piece_index])
             if not self.current_piece:
@@ -67,6 +69,8 @@ class GameModel:
             Effects().hold_piece.play(maxtime=300)
 
     def clear_planes(self):
+        if not self.grid:
+            return # Prevent error if clear_planes is called when game is not initialized
         from Qubitrix.qubitrix import HEIGHT, DEPTH, WIDTH, PLANE_CLEAR_SCORE_BONUSES, SPIN_CLEAR_SCORE_FACTOR, PLANE_CLEAR_MULT_BONUSES, SPIN_CLEAR_MULT_FACTOR, Effects
         planes_cleared = 0
         for z in range(HEIGHT):
