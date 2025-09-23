@@ -3,6 +3,48 @@ import math
 from copy import deepcopy
 
 class GameModel:
+    # --- Properties for key state variables ---
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, value):
+        self._score = value
+
+    @property
+    def level(self):
+        return self._level
+
+    @level.setter
+    def level(self, value):
+        self._level = value
+
+    @property
+    def current_piece(self):
+        return self._current_piece
+
+    @current_piece.setter
+    def current_piece(self, value):
+        self._current_piece = value
+
+    @property
+    def grid(self):
+        return self._grid
+
+    @grid.setter
+    def grid(self, value):
+        self._grid = value
+
+    @property
+    def mode(self):
+        return self._mode
+
+    @mode.setter
+    def mode(self, value):
+        self._mode = value
+
+    # Add more properties as needed for other state variables
     def score_mult_bonus(self, amount):
         from Qubitrix.qubitrix import MULT_BUFFER_SIZE
         self.score_mult_buffer += amount
@@ -59,29 +101,29 @@ class GameModel:
     """
     def __init__(self):
         # Game state variables migrated from Game class
-        self.mode = "Home"
+        self._mode = "Home"
         self.rotate_modifier = False
         self.key_hold_times = [0, 0, 0, 0, 0, 0, 0]
         self.initial_level = 1
-        self.score = 0
+        self._score = 0
         self.total_planes_cleared = 0
         self.plane_clear_level_progress = 0
         self.total_plane_clear_types = [0, 0, 0, 0]
         self.total_spin_clear_types = [0, 0, 0]
         self.total_spins = 0
         self.secluded_spaces = 0
-        self.level = self.initial_level
+        self._level = self.initial_level
         self.score_multiplier = 1.0
         self.highest_score_multiplier = 1.0
         self.score_mult_buffer = 0.0
-        self.score_mult_cap = 1.0 + self.level/5
+        self.score_mult_cap = 1.0 + self._level/5
         self.next_pieces = []
         self.held_piece = {}
         self.grid_rotation = 0
         self.visual_grid_rotation = 0.0
         self.game_over_screen_time = 0
-        self.grid = None  # Will be initialized in a method
-        self.current_piece = None
+        self._grid = None  # Will be initialized in a method
+        self._current_piece = None
         self.ghost_piece = None
         # Add more fields as needed from Game class
 
