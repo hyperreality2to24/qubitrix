@@ -33,6 +33,7 @@ UI_COLORS = [tuple(COLORS[n][m]*0.2+20 for m in range(3)) for n in (0, 2, 1, 4, 
 CUBE_VERTEX_OFFSET = 0.46 # the size of the cube divided by 2
 GHOST_BORDER_WIDTH = int(WINDOW_HEIGHT/360) # width of ghost pieces' and secluded spaces' borders
 RENDER_CUBES = True # otherwise renders circles as a placeholder
+SHOW_FPS_COUNTER = True
 VISUAL_GRID_ROT_EASING = 12/FPS
 GAME_OVER_SCREEN_ANIM_TIME = 0.5 # in seconds
 ANALOG_DEADZONE_WIDTH = 0.55 # setting this above 0.7 will make diagonals impossible
@@ -901,7 +902,7 @@ def global_tick(game):
             game.ease_grid_rotation()
             game.game_over_screen_tick()
     
-def global_render(screen, game, font_small, font_large, ui_color_id):
+def global_render(screen, game, font_small, font_large, ui_color_id, current_fps):
     match game.mode:
         case "Playing":
             draw_game_ui(screen, game, font_small, font_large, ui_color_id)
@@ -920,6 +921,9 @@ def global_render(screen, game, font_small, font_large, ui_color_id):
                 draw_finish_ui(screen, game, font_small, font_large, ui_color_id)
         case "Home":
             draw_home_ui(screen, game, font_small, font_large)
+    if SHOW_FPS_COUNTER:
+        fps_text = font_small.render(f"FPS: {math.floor(current_fps)}", False, COLORS[-5] if current_fps / FPS < 0.98 else COLORS[-3])
+        screen.blit(fps_text, (1, 1))
 
 def main():
     pygame.init()
@@ -961,11 +965,9 @@ def main():
         
         global_tick(game)
 
-        global_render(screen, game, font_small, font_large, ui_color_id)
+        global_render(screen, game, font_small, font_large, ui_color_id, pygame.time.Clock.get_fps(clock))
         
         pygame.display.update()
-        if ((pygame.time.Clock.get_fps(clock) / FPS) < 0.98) and pygame.time.get_ticks() > 500:
-            print("something's causing lag")
         clock.tick(FPS)
 
 if __name__ == '__main__':
