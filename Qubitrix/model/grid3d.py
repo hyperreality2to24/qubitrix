@@ -1,4 +1,14 @@
 class Grid3D:
+    def is_empty(self):
+        """
+        Returns True if all values in the grid are set to the default value.
+        """
+        for x in range(self.width):
+            for y in range(self.depth):
+                for z in range(self.height):
+                    if self._grid[x][y][z] != self.default:
+                        return False
+        return True
     """
     Declarative 3D grid for Qubitrix game state.
     Wraps a 3D list and provides clean access and utility methods.
