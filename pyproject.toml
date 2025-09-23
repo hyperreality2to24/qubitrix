@@ -28,7 +28,8 @@ test = [
 
 [project.scripts]
 Qubitrix = "Qubitrix.qubitrix:main"
+qubitrix-mvc = "Qubitrix.app:main"
 
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

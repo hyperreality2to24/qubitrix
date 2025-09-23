@@ -1,5 +1,5 @@
 import pygame
-from controllers.abstract_controller import AbstractController, GameEvent # type: ignore
+from Qubitrix.controllers.abstract_controller import AbstractController, GameEvent # type: ignore
 
 class KeyboardController(AbstractController):
     MODIFIER_KEY_ID = 0 # Set to KMOD_LSHIFT. This current implementation only allows for detecting if keys such as Shift/Ctrl/Alt are pressed, and is thus subject to change.

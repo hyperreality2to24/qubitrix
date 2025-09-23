@@ -5,10 +5,10 @@ import math
 from copy import deepcopy
 from pygame.locals import QUIT, KEYDOWN, KEYUP
 
-from fonts import get_large_font, get_small_font
-from sounds import Effects
-from controllers.abstract_controller import AbstractController, GameEvent # type: ignore
-from controllers.keyboard_controller import KeyboardController
+from Qubitrix.fonts import get_large_font, get_small_font
+from Qubitrix.sounds import Effects
+from Qubitrix.controllers.abstract_controller import AbstractController, GameEvent # type: ignore
+from Qubitrix.controllers.keyboard_controller import KeyboardController
 
 WINDOW_WIDTH, WINDOW_HEIGHT = 960, 720
 ASPECT_RATIO = WINDOW_WIDTH/WINDOW_HEIGHT
@@ -556,7 +556,7 @@ def draw_home_ui(screen, game, font_small, font_large):
     for level in range(1, MAXIMUM_SELECTABLE_LEVEL+1):
         x = WINDOW_WIDTH/2 - WINDOW_HEIGHT*SELECTABLE_LEVEL_GRID_WIDTH/20 + ((level-1)%SELECTABLE_LEVEL_GRID_WIDTH+0.1)*WINDOW_HEIGHT*0.1
         y = (level-1)//SELECTABLE_LEVEL_GRID_WIDTH*WINDOW_HEIGHT*0.1 + WINDOW_HEIGHT*0.4
-        pygame.draw.rect(screen, UI_COLORS[min(math.ceil(level/STAGE_LENGTH), 9)] if (level != game.initial_level) else COLORS[-2], (x, y, WINDOW_HEIGHT*0.08, WINDOW_HEIGHT*0.08))
+        pygame.draw.rect(screen, UI_COLORS[min(math.ceil(level/STAGE_LENGTH), 9)] if (level != game.initial_level) else COLORS[-2], (x, y, WINDOW_HEIGHT*0.08, WINDOW_HEIGHT*0.08)) # type: ignore
         level_text = font_small.render(f"{level:02d}", False, COLORS[-3] if (level != game.initial_level) else UI_COLORS[min(math.ceil(level/STAGE_LENGTH), 9)])
         level_text_rect = level_text.get_rect()
         level_text_rect.center = (x+WINDOW_HEIGHT*0.042, y+WINDOW_HEIGHT*0.045)
