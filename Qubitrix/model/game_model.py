@@ -1,6 +1,7 @@
 import random
 import math
 from copy import deepcopy
+from Qubitrix.model.grid3d import Grid3D
 
 class GameModel:
     # --- Properties for key state variables ---
@@ -77,14 +78,11 @@ class GameModel:
             cubes = 0
             for y in range(DEPTH):
                 for x in range(WIDTH):
-                    if self.grid[x][y][z] > 0:
+                    if self.grid.get(x, y, z) > 0:
                         cubes += 1
             if cubes == DEPTH*WIDTH:
                 planes_cleared += 1
-                for y in range(DEPTH):
-                    for x in range(WIDTH):
-                        self.grid[x][y].pop(z)
-                        self.grid[x][y].insert(0, 0)
+                self.grid.remove_plane_and_shift_down(z)
         self.increase_score(PLANE_CLEAR_SCORE_BONUSES[min(planes_cleared, 4)] * (SPIN_CLEAR_SCORE_FACTOR if self.piece_spin_on_last_movement else 1))
         self.total_planes_cleared += planes_cleared
         self.plane_clear_level_progress += planes_cleared
@@ -126,14 +124,15 @@ class GameModel:
         self.grid_rotation = 0
         self.visual_grid_rotation = 0.0
         self.game_over_screen_time = 0
-        self._grid = None  # Will be initialized in a method
+        from Qubitrix.qubitrix import HEIGHT, DEPTH, WIDTH, get_level_requirement, PIECES, FPS, Effects
+        self._grid = Grid3D(WIDTH, DEPTH, HEIGHT, default=0)
         self._current_piece = None
         self.ghost_piece = None
         # Add more fields as needed from Game class
 
     def init_game(self):
         from Qubitrix.qubitrix import HEIGHT, DEPTH, WIDTH, get_level_requirement, PIECES, FPS, Effects
-        self.grid = [[[0 for _ in range(HEIGHT)] for _ in range(DEPTH)] for _ in range(WIDTH)]
+        self.grid = Grid3D(WIDTH, DEPTH, HEIGHT, default=0)
         self.mode = "Playing"
         self.score = 0
         self.total_planes_cleared = 0

@@ -207,3 +207,4 @@ __marimo__/
 
 # working folder for local code not to be sent to the repo 
 working/
+.codacy/codacy.yaml
