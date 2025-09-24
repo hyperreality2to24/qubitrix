@@ -34,7 +34,7 @@ def main():
             print("Quitting.")
             break
         else:
-            print("Unknown command.")
+            print("Unknown command. [h=home, g=game, p=pause, r=resume, s=summary, t=settings, q=quit]")
 
 if __name__ == "__main__":
     main()
