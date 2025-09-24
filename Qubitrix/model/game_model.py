@@ -19,6 +19,11 @@ class GameModel:
         self.total_spins = 0
         self.secluded_spaces = 0
         self._level = self.initial_level
+        self._grid = None  # Ensure grid is always present as an attribute
+        self.score_multiplier = 1.0
+        self.highest_score_multiplier = 1.0
+        self.score_mult_buffer = 0.0
+        self.score_mult_cap = 1.0 + self._level/5
         # ...initialize other fields as needed...
     # --- Properties for key state variables ---
     @property

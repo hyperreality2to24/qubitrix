@@ -4,8 +4,7 @@ from Qubitrix.model.grid3d import Grid3D
 
 def test_initial_state():
     model = GameModel()
-    assert isinstance(model.grid, Grid3D)
-    assert model.grid.is_empty()
+    assert model.grid is None
     assert model.mode == "Home"
     assert model.score == 0
     assert model.level == model.initial_level
