@@ -24,9 +24,15 @@ class AppController:
             elif cmd == 'g':
                 self.app_model.start_game()
             elif cmd == 'p':
-                self.app_model.pause_game()
+                if self.app_model.current_view == ViewType.GAME:
+                    self.app_model.pause_game()
+                else:
+                    print("[AppController] Pause only allowed during game.")
             elif cmd == 'r':
-                self.app_model.resume_game()
+                if self.app_model.current_view == ViewType.PAUSE:
+                    self.app_model.resume_game()
+                else:
+                    print("[AppController] Resume only allowed from pause.")
             elif cmd == 's':
                 self.app_model.show_summary()
             elif cmd == 't':

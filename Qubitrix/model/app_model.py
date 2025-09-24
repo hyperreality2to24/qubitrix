@@ -26,13 +26,12 @@ class AppModel:
         self.current_view = ViewType.HOME
         self.game_model = None
 
+
     def pause_game(self):
-        if self.current_view == ViewType.GAME:
-            self.current_view = ViewType.PAUSE
+        self.current_view = ViewType.PAUSE
 
     def resume_game(self):
-        if self.current_view == ViewType.PAUSE:
-            self.current_view = ViewType.GAME
+        self.current_view = ViewType.GAME
 
     def show_summary(self):
         self.current_view = ViewType.SUMMARY
