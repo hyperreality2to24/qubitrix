@@ -61,14 +61,24 @@ class AppController:
         print("Qubitrix MVC Demo. Press h=home, g=game, p=pause, r=resume, s=summary, t=settings, q=quit.")
         while True:
             controller = self.get_screen_controller()
-            if controller:
-                controller.render()
+            # Use Pygame event loop for each screen if available
+            if self.app_model.current_view == ViewType.GAME and controller:
+                GameScreenController.run_pygame(self.app_model.game_model, self.app_view.get_view(ViewType.GAME))
+            elif self.app_model.current_view == ViewType.PAUSE and controller:
+                PauseScreenController.run_pygame(self.app_view.get_view(ViewType.PAUSE))
+            elif self.app_model.current_view == ViewType.SETTINGS and controller:
+                SettingsScreenController.run_pygame(self.app_view.get_view(ViewType.SETTINGS))
             else:
                 view = self.app_view.get_view(self.app_model.current_view)
                 if view is not None:
                     view.render()
                 else:
                     print(f"[ERROR] No view for {self.app_model.current_view}")
-            cmd = input("Command: ").strip().lower()
-            if not self.handle_command(cmd):
-                break
+                cmd = input("Command: ").strip().lower()
+                if not self.handle_command(cmd):
+                    break
+            # After returning from a Pygame screen, prompt for next command
+            if self.app_model.current_view not in (ViewType.GAME, ViewType.PAUSE, ViewType.SETTINGS):
+                cmd = input("Command: ").strip().lower()
+                if not self.handle_command(cmd):
+                    break

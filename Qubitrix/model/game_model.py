@@ -4,6 +4,22 @@ from copy import deepcopy
 from Qubitrix.model.grid3d import Grid3D
 
 class GameModel:
+    def __init__(self, app_model=None):
+        self.app_model = app_model
+        # Game state variables migrated from Game class
+        self._mode = "Home"
+        self.rotate_modifier = False
+        self.key_hold_times = [0, 0, 0, 0, 0, 0, 0]
+        self.initial_level = 1
+        self._score = 0
+        self.total_planes_cleared = 0
+        self.plane_clear_level_progress = 0
+        self.total_plane_clear_types = [0, 0, 0, 0]
+        self.total_spin_clear_types = [0, 0, 0]
+        self.total_spins = 0
+        self.secluded_spaces = 0
+        self._level = self.initial_level
+        # ...initialize other fields as needed...
     # --- Properties for key state variables ---
     @property
     def score(self):
@@ -101,34 +117,9 @@ class GameModel:
     """
     Handles the game state and logic for Qubitrix (MVC version).
     """
-    def __init__(self):
-        # Game state variables migrated from Game class
-        self._mode = "Home"
-        self.rotate_modifier = False
-        self.key_hold_times = [0, 0, 0, 0, 0, 0, 0]
-        self.initial_level = 1
-        self._score = 0
-        self.total_planes_cleared = 0
-        self.plane_clear_level_progress = 0
-        self.total_plane_clear_types = [0, 0, 0, 0]
-        self.total_spin_clear_types = [0, 0, 0]
-        self.total_spins = 0
-        self.secluded_spaces = 0
-        self._level = self.initial_level
-        self.score_multiplier = 1.0
-        self.highest_score_multiplier = 1.0
-        self.score_mult_buffer = 0.0
-        self.score_mult_cap = 1.0 + self._level/5
-        self.next_pieces = []
-        self.held_piece = {}
-        self.grid_rotation = 0
-        self.visual_grid_rotation = 0.0
-        self.game_over_screen_time = 0
-        from Qubitrix.qubitrix import HEIGHT, DEPTH, WIDTH, get_level_requirement, PIECES, FPS, Effects
-        self._grid = Grid3D(WIDTH, DEPTH, HEIGHT, default=0)
-        self._current_piece = None
-        self.ghost_piece = None
-        # Add more fields as needed from Game class
+    # --- End of __init__ ---
+
+    # All field initializations should be in __init__ or init_game. No stray code here.
 
     def init_game(self):
         from Qubitrix.qubitrix import HEIGHT, DEPTH, WIDTH, get_level_requirement, PIECES, FPS, Effects

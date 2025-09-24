@@ -1,24 +1,16 @@
 class Grid3D:
-    def is_empty(self):
-        """
-        Returns True if all values in the grid are set to the default value.
-        """
-        for x in range(self.width):
-            for y in range(self.depth):
-                for z in range(self.height):
-                    if self._grid[x][y][z] != self.default:
-                        return False
-        return True
     """
     Declarative 3D grid for Qubitrix game state.
     Wraps a 3D list and provides clean access and utility methods.
+    Optionally holds a reference to the AppModel for navigation or state access.
     """
-    def __init__(self, width, depth, height, default=0):
+    def __init__(self, width, depth, height, default=0, app_model=None):
         self.width = width
         self.depth = depth
         self.height = height
         self.default = default
         self._grid = [[[default for _ in range(height)] for _ in range(depth)] for _ in range(width)]
+        self.app_model = app_model
 
     def get(self, x, y, z):
         return self._grid[x][y][z]

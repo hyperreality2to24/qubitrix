@@ -19,7 +19,7 @@ class AppModel:
         # Add other sub-models as needed (e.g., settings_model)
 
     def start_game(self):
-        self.game_model = GameModel()
+        self.game_model = GameModel(app_model=self)
         self.current_view = ViewType.GAME
 
     def go_home(self):
