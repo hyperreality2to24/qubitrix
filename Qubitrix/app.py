@@ -9,7 +9,7 @@ from Qubitrix.view.app_view import AppView
 
 def main():
     app_model = AppModel()
-    app_view = AppView()
+    app_view = AppView(app_model)
     print("Qubitrix MVC Demo. Press h=home, g=game, p=pause, r=resume, s=summary, t=settings, q=quit.")
     while True:
         view = app_view.get_view(app_model.current_view)

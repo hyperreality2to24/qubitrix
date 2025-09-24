@@ -6,18 +6,21 @@ from Qubitrix.view.summary_view import SummaryView
 from Qubitrix.view.settings_view import SettingsView
 
 class AppView:
-    def __init__(self):
-        self._view_map = {
-            ViewType.HOME: HomeView(),
-            ViewType.GAME: GameView(),
-            ViewType.PAUSE: PauseView(),
-            ViewType.SUMMARY: SummaryView(),
-            ViewType.SETTINGS: SettingsView(),
-        }
+    def __init__(self, app_model):
+        self.app_model = app_model
 
     def get_view(self, view_type):
-        view = self._view_map.get(view_type)
-        if view is None:
+        if view_type == ViewType.HOME:
+            return HomeView()
+        elif view_type == ViewType.GAME:
+            # Always inject the current GameModel
+            return GameView(self.app_model.game_model)
+        elif view_type == ViewType.PAUSE:
+            return PauseView()
+        elif view_type == ViewType.SUMMARY:
+            return SummaryView()
+        elif view_type == ViewType.SETTINGS:
+            return SettingsView()
+        else:
             print(f"[ERROR] No view found for {view_type}. Showing HomeView.")
-            return self._view_map[ViewType.HOME]
-        return view
+            return HomeView()
