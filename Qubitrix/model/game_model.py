@@ -113,14 +113,6 @@ class GameModel:
                 self.total_spin_clear_types[min(planes_cleared, 3)-1] += 1
         return planes_cleared
 
-    # Continue migrating all other methods as needed...
-    """
-    Handles the game state and logic for Qubitrix (MVC version).
-    """
-    # --- End of __init__ ---
-
-    # All field initializations should be in __init__ or init_game. No stray code here.
-
     def init_game(self):
         from Qubitrix.qubitrix import HEIGHT, DEPTH, WIDTH, get_level_requirement, PIECES, FPS, Effects
         self.grid = Grid3D(WIDTH, DEPTH, HEIGHT, default=0)
