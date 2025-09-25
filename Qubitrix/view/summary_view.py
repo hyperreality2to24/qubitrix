@@ -1,6 +1,5 @@
-class SummaryView:
+from Qubitrix.view.base_view import BaseView
+
+class SummaryView(BaseView):
     def render(self, screen):
-        import pygame
-        font = pygame.font.SysFont(None, 48)
-        text = font.render("Summary Screen", True, (255, 255, 255))
-        screen.blit(text, (20, 20))
+        self.draw_text(screen, "Summary Screen", (20, 20))

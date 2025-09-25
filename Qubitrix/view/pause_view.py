@@ -1,6 +1,5 @@
-class PauseView:
+from Qubitrix.view.base_view import BaseView
+
+class PauseView(BaseView):
     def render(self, screen):
-        import pygame
-        font = pygame.font.SysFont(None, 48)
-        text = font.render("Pause Screen", True, (255, 255, 255))
-        screen.blit(text, (20, 20))
+        self.draw_text(screen, "Pause Screen", (20, 20))

@@ -1,6 +1,5 @@
-class HomeView:
+from Qubitrix.view.base_view import BaseView
+
+class HomeView(BaseView):
     def render(self, screen):
-        import pygame
-        font = pygame.font.SysFont(None, 48)
-        text = font.render("Home Screen", True, (255, 255, 255))
-        screen.blit(text, (20, 20))
+        self.draw_text(screen, "Home Screen", (20, 20))

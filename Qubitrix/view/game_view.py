@@ -1,9 +1,9 @@
-class GameView:
+from Qubitrix.view.base_view import BaseView
+
+class GameView(BaseView):
     def __init__(self, model=None):
+        super().__init__()
         self.model = model
 
     def render(self, screen):
-        import pygame
-        font = pygame.font.SysFont(None, 48)
-        text = font.render("Game Screen", True, (255, 255, 255))
-        screen.blit(text, (20, 20))
+        self.draw_text(screen, "Game Screen", (20, 20))
