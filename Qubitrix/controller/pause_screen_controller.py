@@ -50,7 +50,7 @@ class PauseScreenController:
                         if app_model:
                             app_model.current_view = ViewType.HOME
             screen.fill((30, 30, 30))
-            # view.render_pygame(screen)  # Implement in PauseView
+            view.render(screen)
             pygame.display.flip()
             clock.tick(60)
         pygame.quit()

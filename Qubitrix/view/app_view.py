@@ -6,6 +6,12 @@ from Qubitrix.view.summary_view import SummaryView
 from Qubitrix.view.settings_view import SettingsView
 
 class AppView:
+    """
+    Central view manager for Qubitrix.
+    Responsible for instantiating and returning the correct view object for each application state (HOME, GAME, PAUSE, SUMMARY, SETTINGS).
+    Each view handles its own rendering logic, typically via a `render(screen)` method for Pygame output.
+    AppView acts as a factory and router, ensuring the right view is used for the current state.
+    """
     def __init__(self, app_model):
         self.app_model = app_model
 

@@ -1,3 +1,6 @@
 class HomeView:
-    def render(self):
-        print("[VIEW] HomeView: Home screen")
+    def render(self, screen):
+        import pygame
+        font = pygame.font.SysFont(None, 48)
+        text = font.render("Home Screen", True, (255, 255, 255))
+        screen.blit(text, (20, 20))

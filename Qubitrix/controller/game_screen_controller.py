@@ -54,7 +54,7 @@ class GameScreenController:
             # model.update()  # Implement as needed
             # Render
             screen.fill((0, 0, 0))
-            # view.render_pygame(screen)  # Implement in GameView
+            view.render(screen)
             pygame.display.flip()
             clock.tick(60)
         pygame.quit()

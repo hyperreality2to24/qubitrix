@@ -33,7 +33,7 @@ class HomeScreenController(BaseScreenController):
                         running = False
                         quit_requested = True
             screen.fill((50, 50, 50))
-            # view.render_pygame(screen)  # Implement in HomeView if needed
+            view.render(screen)
             pygame.display.flip()
             clock.tick(60)
         pygame.quit()

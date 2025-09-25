@@ -29,7 +29,7 @@ class SettingsScreenController:
                     if event.key == pygame.K_ESCAPE:
                         running = False
             screen.fill((50, 50, 50))
-            # view.render_pygame(screen)  # Implement in SettingsView
+            view.render(screen)
             pygame.display.flip()
             clock.tick(60)
         pygame.quit()
