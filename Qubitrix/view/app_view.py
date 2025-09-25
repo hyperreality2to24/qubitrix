@@ -15,14 +15,14 @@ class AppView:
     def __init__(self, app_model):
         self.app_model = app_model
 
-    def get_view(self, view_type):
+    def get_view(self, view_type, previous_view=None, pause_model=None):
         if view_type == ViewType.HOME:
             return HomeView(app_model=self.app_model)
         elif view_type == ViewType.GAME:
             # Always inject the current GameModel
             return GameView(self.app_model.game_model)
         elif view_type == ViewType.PAUSE:
-            return PauseView(app_model=self.app_model)
+            return PauseView(app_model=self.app_model, pause_model=pause_model)
         elif view_type == ViewType.SUMMARY:
             return SummaryView()
         elif view_type == ViewType.SETTINGS:

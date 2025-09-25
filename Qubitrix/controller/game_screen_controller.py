@@ -21,7 +21,7 @@ class GameScreenController:
         self.view.render()
 
     @staticmethod
-    def run_pygame(model, view):
+    def run_pygame(model, view, pause_callback=None):
         import pygame
         from Qubitrix.model.app_model import ViewType
         pygame.init()
@@ -29,7 +29,6 @@ class GameScreenController:
         pygame.display.set_caption("Qubitrix - Game Screen")
         clock = pygame.time.Clock()
         running = True
-        # We assume model has a reference to the app_model (or pass it in as needed)
         app_model = getattr(model, 'app_model', None)
         while running:
             for event in pygame.event.get():
@@ -43,6 +42,10 @@ class GameScreenController:
                         if app_model:
                             app_model.current_view = ViewType.HOME
                     elif event.key == pygame.K_p:
+                        # Capture bitmap before pausing
+                        paused_bitmap = screen.copy()
+                        if pause_callback:
+                            pause_callback(paused_bitmap)
                         running = False
                         if app_model:
                             app_model.current_view = ViewType.PAUSE

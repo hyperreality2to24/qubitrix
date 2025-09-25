@@ -14,10 +14,11 @@ class AppController:
         self.app_view = app_view
         self.quit_flag = False
         from Qubitrix.controller.home_screen_controller import HomeScreenController
+        self.previous_view = None
         self.screen_controllers = {
             ViewType.HOME: lambda: HomeScreenController(self.app_view.get_view(ViewType.HOME)),
             ViewType.GAME: lambda: GameScreenController(self.app_model.game_model, self.app_view.get_view(ViewType.GAME)),
-            ViewType.PAUSE: lambda: PauseScreenController(self.app_view.get_view(ViewType.PAUSE)),
+            ViewType.PAUSE: lambda: PauseScreenController(self.app_view.get_view(ViewType.PAUSE, previous_view=self.previous_view)),
             ViewType.SETTINGS: lambda: SettingsScreenController(self.app_view.get_view(ViewType.SETTINGS)),
             # Add more as needed
         }
@@ -62,24 +63,34 @@ class AppController:
 
     def run(self):
         print("Qubitrix MVC Demo. Press h=home, g=game, p=pause, r=resume, s=summary, t=settings, q=quit.")
+        pause_model = None
         while not self.quit_flag:
             controller = self.get_screen_controller()
             view_type = self.app_model.current_view
             print(f"[DEBUG] Launching view: {view_type}")
-            # Launch the appropriate Pygame screen for the current view
-            if view_type == ViewType.HOME and controller:
+
+            if view_type == ViewType.PAUSE:
+                from Qubitrix.model.pause_model import PauseModel
+                controller = PauseScreenController(self.app_view.get_view(ViewType.PAUSE, pause_model=pause_model))
+                controller.run_pygame(controller.view)
+            elif view_type == ViewType.GAME and controller:
+                def set_pause_bitmap(bitmap):
+                    nonlocal pause_model
+                    from Qubitrix.model.pause_model import PauseModel
+                    pause_model = PauseModel(paused_bitmap=bitmap)
+                self.previous_view = self.app_view.get_view(ViewType.GAME)
+                print(f"[DEBUG] Entering GameScreenController.run_pygame")
+                GameScreenController.run_pygame(self.app_model.game_model, self.previous_view, pause_callback=set_pause_bitmap)
+            elif view_type == ViewType.HOME and controller:
+                self.previous_view = self.app_view.get_view(ViewType.HOME)
                 from Qubitrix.controller.home_screen_controller import HomeScreenController
-                result = HomeScreenController.run_pygame(self.app_view.get_view(ViewType.HOME))
+                result = HomeScreenController.run_pygame(self.previous_view)
                 if result == 'quit':
                     self.quit_flag = True
                     break
-            elif view_type == ViewType.GAME and controller:
-                print(f"[DEBUG] Entering GameScreenController.run_pygame")
-                GameScreenController.run_pygame(self.app_model.game_model, self.app_view.get_view(ViewType.GAME))
-            elif view_type == ViewType.PAUSE and controller:
-                PauseScreenController.run_pygame(self.app_view.get_view(ViewType.PAUSE))
             elif view_type == ViewType.SETTINGS and controller:
-                SettingsScreenController.run_pygame(self.app_view.get_view(ViewType.SETTINGS))
+                self.previous_view = self.app_view.get_view(ViewType.SETTINGS)
+                SettingsScreenController.run_pygame(self.previous_view)
             else:
                 view = self.app_view.get_view(view_type)
                 if view is not None:
