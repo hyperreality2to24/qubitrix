@@ -1,4 +1,3 @@
-import pytest
 from Qubitrix.sounds import Effects # This gives a "missing import" warning in VSCode, but still works for some reason
 
 def test_singleton():
