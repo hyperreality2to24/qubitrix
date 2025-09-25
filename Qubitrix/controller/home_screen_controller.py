@@ -1,13 +1,13 @@
 import pygame
 from Qubitrix.model.app_model import ViewType
+from Qubitrix.controller.base_screen_controller import BaseScreenController
 
-class HomeScreenController:
+class HomeScreenController(BaseScreenController):
     """
     Handles input and logic for the Home screen, using Pygame for input and rendering.
     """
     def __init__(self, view):
-        self.view = view
-        self.app_model = getattr(view, 'app_model', None)
+        super().__init__(view)
 
     @staticmethod
     def run_pygame(view):

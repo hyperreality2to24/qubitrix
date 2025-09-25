@@ -1,6 +1,11 @@
 import pygame
 
 class BaseScreenController:
+    def handle_input(self, cmd):
+        """
+        Accepts input for testing or non-pygame scenarios. Subclasses can override for custom behavior.
+        """
+        print(f"[BaseScreenController] Received input: {cmd}")
     """
     Base class for all screen controllers. Handles common Pygame event loop logic, including quitting on 'q' or window close.
     Subclasses should override handle_key and optionally render_screen.
