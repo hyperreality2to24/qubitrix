@@ -29,6 +29,7 @@ class HomeScreenController(BaseScreenController):
                         running = False
                         if app_model:
                             app_model.start_game()
+                            print(f"[DEBUG] G pressed, current_view set to: {app_model.current_view}")
                     elif event.key == pygame.K_q:
                         running = False
                         quit_requested = True

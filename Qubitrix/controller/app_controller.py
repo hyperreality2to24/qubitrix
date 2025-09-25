@@ -64,42 +64,34 @@ class AppController:
         print("Qubitrix MVC Demo. Press h=home, g=game, p=pause, r=resume, s=summary, t=settings, q=quit.")
         while not self.quit_flag:
             controller = self.get_screen_controller()
-            # Use Pygame event loop for each screen if available
-            if self.app_model.current_view == ViewType.HOME and controller:
+            view_type = self.app_model.current_view
+            print(f"[DEBUG] Launching view: {view_type}")
+            # Launch the appropriate Pygame screen for the current view
+            if view_type == ViewType.HOME and controller:
                 from Qubitrix.controller.home_screen_controller import HomeScreenController
-                # Pass quit_flag by reference
-                if HomeScreenController.run_pygame(self.app_view.get_view(ViewType.HOME)) == 'quit':
+                result = HomeScreenController.run_pygame(self.app_view.get_view(ViewType.HOME))
+                if result == 'quit':
                     self.quit_flag = True
                     break
-            elif self.app_model.current_view == ViewType.GAME and controller:
+            elif view_type == ViewType.GAME and controller:
+                print(f"[DEBUG] Entering GameScreenController.run_pygame")
                 GameScreenController.run_pygame(self.app_model.game_model, self.app_view.get_view(ViewType.GAME))
-            elif self.app_model.current_view == ViewType.PAUSE and controller:
+            elif view_type == ViewType.PAUSE and controller:
                 PauseScreenController.run_pygame(self.app_view.get_view(ViewType.PAUSE))
-            elif self.app_model.current_view == ViewType.SETTINGS and controller:
+            elif view_type == ViewType.SETTINGS and controller:
                 SettingsScreenController.run_pygame(self.app_view.get_view(ViewType.SETTINGS))
             else:
-                view = self.app_view.get_view(self.app_model.current_view)
+                view = self.app_view.get_view(view_type)
                 if view is not None:
                     view.render()
                 else:
-                    print(f"[ERROR] No view for {self.app_model.current_view}")
+                    print(f"[ERROR] No view for {view_type}")
                 cmd = input("Command: ").strip().lower()
                 if not self.handle_command(cmd):
                     break
 
-            # After returning from a Pygame screen, immediately launch the next screen if current_view changed to another Pygame screen
-            while self.app_model.current_view in (ViewType.HOME, ViewType.GAME, ViewType.PAUSE, ViewType.SETTINGS) and not self.quit_flag:
-                controller = self.get_screen_controller()
-                if self.app_model.current_view == ViewType.HOME and controller:
-                    from Qubitrix.controller.home_screen_controller import HomeScreenController
-                    if HomeScreenController.run_pygame(self.app_view.get_view(ViewType.HOME)) == 'quit':
-                        self.quit_flag = True
-                        break
-                elif self.app_model.current_view == ViewType.GAME and controller:
-                    GameScreenController.run_pygame(self.app_model.game_model, self.app_view.get_view(ViewType.GAME))
-                elif self.app_model.current_view == ViewType.PAUSE and controller:
-                    PauseScreenController.run_pygame(self.app_view.get_view(ViewType.PAUSE))
-                elif self.app_model.current_view == ViewType.SETTINGS and controller:
-                    SettingsScreenController.run_pygame(self.app_view.get_view(ViewType.SETTINGS))
-                else:
-                    break
+            # Immediately check for a new view and continue if changed
+            new_view_type = self.app_model.current_view
+            if new_view_type != view_type:
+                print(f"[DEBUG] View changed from {view_type} to {new_view_type}")
+                continue

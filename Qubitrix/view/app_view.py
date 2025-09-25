@@ -17,16 +17,16 @@ class AppView:
 
     def get_view(self, view_type):
         if view_type == ViewType.HOME:
-            return HomeView()
+            return HomeView(app_model=self.app_model)
         elif view_type == ViewType.GAME:
             # Always inject the current GameModel
             return GameView(self.app_model.game_model)
         elif view_type == ViewType.PAUSE:
-            return PauseView()
+            return PauseView(app_model=self.app_model)
         elif view_type == ViewType.SUMMARY:
             return SummaryView()
         elif view_type == ViewType.SETTINGS:
             return SettingsView()
         else:
             print(f"[ERROR] No view found for {view_type}. Showing HomeView.")
-            return HomeView()
+            return HomeView(app_model=self.app_model)
