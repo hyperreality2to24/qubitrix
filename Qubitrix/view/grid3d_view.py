@@ -7,6 +7,13 @@ class Grid3DView:
         self.rotation_angle = rotation_angle
 
     def render(self, screen):
+        # Print last keystroke from grid_controller if available
+        grid_controller = getattr(self.grid_model, 'grid_controller', None)
+        if grid_controller and hasattr(grid_controller, 'last_keystroke'):
+            font = pygame.font.SysFont(None, 24)
+            text = f"Last keystroke: {grid_controller.last_keystroke}"
+            img = font.render(text, True, (255, 255, 0))
+            screen.blit(img, (20, 20))
         WIDTH = self.grid_model.width
         DEPTH = self.grid_model.depth
         HEIGHT = self.grid_model.height
