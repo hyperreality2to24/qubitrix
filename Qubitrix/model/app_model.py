@@ -20,6 +20,7 @@ class AppModel:
 
     def start_game(self):
         self.game_model = GameModel(app_model=self)
+        self.game_model.init_game()
         self.current_view = ViewType.GAME
 
     def go_home(self):

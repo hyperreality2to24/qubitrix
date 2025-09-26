@@ -14,7 +14,7 @@ class DummyAppView(AppView):
 	"""
 	def __init__(self, app_model):
 		super().__init__(app_model)
-	def get_view(self, view_type):
+	def get_view(self, view_type, **kwargs):  # kwargs to match signature
 		return DummyView()
 
 def test_pause_only_allowed_from_game():
